@@ -16,21 +16,6 @@
 	<codes>
 	</codes>
 	<templates>
-		<template name="splr_anim_css" templatetype="template" date="1290059591" username="jpatuk" version="0.1"><![CDATA[<style type="text/css">
-.splr_anim_container {
-  overflow:hidden;
-  position:static;
-}
-
-.splr_anim_hidden {
-  height:0px;
-}
-</style>]]></template>
-		<template name="splr_anim_init_js" templatetype="template" date="1289982152" username="jpatuk" version="0.1"><![CDATA[<script type="text/javascript">
-<!--
-    Spoiler.init();
-//-->
-</script>]]></template>
 		<template name="splr_anim_js" templatetype="template" date="1289895391" username="jpatuk" version="0.1"><![CDATA[<script type="text/javascript" src="clientscript/spoiler.js?v={vb:raw version}"></script>
 <vb:if condition="!isset($show['yui_animation_exists'])">
 <script type="text/javascript" src="{vb:stylevar yuipath}/animation/animation-min.js?v={vb:raw vboptions.simpleversion}"></script>
@@ -44,33 +29,20 @@
 		<plugin active="1" executionorder="5">
 			<title>Cache templates</title>
 			<hookname>cache_templates</hookname>
-			<phpcode><![CDATA[if (THIS_SCRIPT == 'showthread')
-{
-    $cache = array_merge((array)$cache,array(
-        'splr_anim_js',
-        'splr_anim_init_js',
-        'splr_anim_css'
-    ));
-}]]></phpcode>
+			<phpcode><![CDATA[$cache[] = 'splr_anim_js';]]></phpcode>
 		</plugin>
 		<plugin active="1" executionorder="5">
 			<title>Insert js</title>
 			<hookname>parse_templates</hookname>
 			<phpcode><![CDATA[//add rcd_iquote.js file
-    $templater = vB_Template::create('splr_anim_js');
-    $templater->register('version', 0.1);
-    $template_hook['headinclude_javascript'] .= $templater->render();
+$templater = vB_Template::create('splr_anim_js');
+$templater->register('version', 0.1);
+$template_hook['headinclude_javascript'] .= $templater->render();
 
-    if (!$show['yui_animation_exists'])
-    {
-        $show['yui_animation_exists'] = true;
-    }
-
-    $templater = vB_Template::create('splr_anim_init_js');
-    $template_hook['footer_javascript'] .= $templater->render();
-
-    $templater = vB_Template::create('splr_anim_css');
-    $template_hook['headinclude_bottom_css'] .= $templater->render();]]></phpcode>
+if (!$show['yui_animation_exists'])
+{
+    $show['yui_animation_exists'] = true;
+}]]></phpcode>
 		</plugin>
 	</plugins>
 	<phrases>

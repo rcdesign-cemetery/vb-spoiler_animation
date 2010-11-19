@@ -9,7 +9,7 @@ Installation:
    - in Title- Spoiler
    - in BB Code Tag Name - spoiler
    - in Replacement  - 
-     <div style="margin:2em 0em 2em 1.3em;">* <a style="text-decoration: none; border-width:1px; border-style:none none dashed;" name="spoiler" onclick="obj=this.parentNode.childNodes[2].style; tmp=(obj.display!='block') ? 'block' : 'none'; obj.display=tmp; return false;" href="#">{option}</a><div class="subblock" style="display:none;margin-left:1.7em;margin-top:0.8em;">{param}</div></div>
+     <div style="margin:2em 0em 2em 1.3em;">* <a style="text-decoration: none; border-width:1px; border-style:none none dashed;" name="spoiler" onclick="if(typeof Spoiler !== 'undefined'){Spoiler.toggle_display(event);}else{obj=this.parentNode.childNodes[2].style; tmp=(obj.height!='0px') ? '0px' : 'auto'; obj.height=tmp;} return false;" href="#">{option}</a><div class="subblock" style="overflow:hidden;height:0px;margin-left:1.7em;margin-top:0.8em;"><div>{param}</div></div></div>
    - in Example - [spoiler=Example]Enter the text we want to hide[/spoiler]
    - in Description - Tag to hide spoiler
    - Use {option} - Yes
