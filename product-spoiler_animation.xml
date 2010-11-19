@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<product productid="spoiler_animation" active="1">
+	<title>Spoiler Animation</title>
+	<description><![CDATA[Adds animation to [spoiler] BB Code]]></description>
+	<version>0.1</version>
+	<url><![CDATA[http://www.vbulletin.org/forum/misc.php?do=productcheck&pid=spoiler_animation]]></url>
+	<versioncheckurl><![CDATA[http://www.vbulletin.org/forum/misc.php?do=productcheck&pid=spoiler_animation]]></versioncheckurl>
+	<apm_releasedate>0</apm_releasedate>
+	<apm_author />
+	<apm_relatedurl />
+	<apm_extrainfo />
+	<apm_extraedit />
+	<dependencies>
+	</dependencies>
+	<codes>
+	</codes>
+	<templates>
+		<template name="splr_anim_css" templatetype="template" date="1290059591" username="jpatuk" version="0.1"><![CDATA[<style type="text/css">
+.splr_anim_container {
+  overflow:hidden;
+  position:static;
+}
+
+.splr_anim_hidden {
+  height:0px;
+}
+</style>]]></template>
+		<template name="splr_anim_init_js" templatetype="template" date="1289982152" username="jpatuk" version="0.1"><![CDATA[<script type="text/javascript">
+<!--
+    Spoiler.init();
+//-->
+</script>]]></template>
+		<template name="splr_anim_js" templatetype="template" date="1289895391" username="jpatuk" version="0.1"><![CDATA[<script type="text/javascript" src="clientscript/spoiler.js?v={vb:raw version}"></script>
+<vb:if condition="!isset($show['yui_animation_exists'])">
+<script type="text/javascript" src="{vb:stylevar yuipath}/animation/animation-min.js?v={vb:raw vboptions.simpleversion}"></script>
+</vb:if>]]></template>
+	</templates>
+	<stylevardfns>
+	</stylevardfns>
+	<stylevars>
+	</stylevars>
+	<plugins>
+		<plugin active="1" executionorder="5">
+			<title>Cache templates</title>
+			<hookname>cache_templates</hookname>
+			<phpcode><![CDATA[if (THIS_SCRIPT == 'showthread')
+{
+    $cache = array_merge((array)$cache,array(
+        'splr_anim_js',
+        'splr_anim_init_js',
+        'splr_anim_css'
+    ));
+}]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>Insert js</title>
+			<hookname>parse_templates</hookname>
+			<phpcode><![CDATA[//add rcd_iquote.js file
+    $templater = vB_Template::create('splr_anim_js');
+    $templater->register('version', 0.1);
+    $template_hook['headinclude_javascript'] .= $templater->render();
+
+    if (!$show['yui_animation_exists'])
+    {
+        $show['yui_animation_exists'] = true;
+    }
+
+    $templater = vB_Template::create('splr_anim_init_js');
+    $template_hook['footer_javascript'] .= $templater->render();
+
+    $templater = vB_Template::create('splr_anim_css');
+    $template_hook['headinclude_bottom_css'] .= $templater->render();]]></phpcode>
+		</plugin>
+	</plugins>
+	<phrases>
+	</phrases>
+	<options>
+	</options>
+	<helptopics>
+	</helptopics>
+	<cronentries>
+	</cronentries>
+	<faqentries>
+	</faqentries>
+	<templateedits>
+	</templateedits>
+</product>
